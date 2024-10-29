@@ -5,16 +5,15 @@ from time import time
 from tqdm import tqdm
 
 class TokenizerTester:
-    def __init__(self, tokenizer, folder_path):
+    def __init__(self, tokenizer):
         self.tokenizer = tokenizer
-        self.folder_path = folder_path
 
-    def _load_texts(self):
+    def load_texts(self, folder_path):
         """Carrega todos os textos dos arquivos JSON na pasta."""
         texts = []
-        for filename in tqdm(os.listdir(self.folder_path)):
+        for filename in tqdm(os.listdir(folder_path)):
             # if filename.endswith(".json"):
-            with open(os.path.join(self.folder_path, filename), "r", encoding="utf-8") as f:
+            with open(os.path.join(folder_path, filename), "r", encoding="utf-8") as f:
                 data = json.load(f)
                 texts.append(data["text"]) 
         return texts
@@ -48,9 +47,8 @@ class TokenizerTester:
 
 
 
-    def test_tokenizer(self, verbose=False):
+    def test_tokenizer(self, texts, verbose=False):
         """Testa o tokenizador paralelamente."""
-        texts = self._load_texts()
         list_errors = []  
 
         start_time = time() 
