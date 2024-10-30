@@ -9,7 +9,7 @@ class TokenizerTester:
         self.tokenizer = tokenizer
 
     def load_texts(self, folder_path):
-        """Carrega todos os textos dos arquivos JSON na pasta."""
+        """Carrega todos os textos presentes nos arquivos json fornecidos pelo professor."""
         texts = []
         for filename in tqdm(os.listdir(folder_path)):
             # if filename.endswith(".json"):
@@ -33,7 +33,7 @@ class TokenizerTester:
             
             vocab_size = get_vocab_size(original_text)
 
-            tokenizer.train(original_text, vocab_size, verbose=verbose)
+            tokenizer.train(original_text, vocab_size, verbose=verbose) # Treina o tokenizador
 
             encoded = tokenizer.encode(original_text)  # Tokeniza o texto
             decoded = tokenizer.decode(encoded)  # Decodifica de volta
@@ -48,7 +48,7 @@ class TokenizerTester:
 
 
     def test_tokenizer(self, texts, verbose=False):
-        """Testa o tokenizador paralelamente."""
+        """Testa o tokenizador paralelamente em um conjunto de textos."""
         list_errors = []  
 
         start_time = time() 
