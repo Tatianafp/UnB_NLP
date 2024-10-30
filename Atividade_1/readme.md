@@ -15,43 +15,38 @@ Nesta atividade, o objetivo é reproduzir o algoritmo de *Byte Pair Encoding* (B
 - **Objetivo**: Implementa um tokenizador com Byte Pair Encoding (BPE) utilizando regex inspirada no GPT-4.
 
 - **Classes**:
-    - NotTrainedError: Exceção levantada se o tokenizador for usado sem treinamento.
-    - Tokenizer: Responsável por treinar e aplicar BPE para tokenização e codificação.
+    - `NotTrainedError`: Exceção levantada se o tokenizador for usado sem treinamento.
+    - `Tokenizer`: Responsável por treinar e aplicar BPE para tokenização e codificação.
 - **Métodos Principais**:
-    - train: Treina o tokenizador para criar merges e vocabulário.
-    - encode: Codifica um texto para IDs de tokens.
-    - decode: Converte IDs de tokens de volta para texto.
+    - `train(self, text, vocab_size, verbose=False)`: 
+        - Treina o tokenizador para criar merges e vocabulário.
+    - `encode(self, text)`: 
+        - Codifica um texto para IDs de tokens.
+    - `decode`: 
+        - Converte IDs de tokens de volta para texto.
 
 ### tester.py
 - **Objetivo**: Testa tokenizadores utilizando múltiplos textos e processamento paralelo.
 
-- **Classes e Atributos**  
+- **Classes**  
   - `TokenizerTester`  
     - Atributo: `tokenizer` – Instância do tokenizador.
 
-- **Métodos Públicos**  
-  - `__init__(self, tokenizer)`  
-    - Inicializa a classe com um tokenizador.
-  
+- **Métodos Principais**  
   - `load_texts(self, folder_path)`  
-    - **Descrição**: Carrega textos a partir de arquivos JSON em uma pasta.  
-    - **Retorna**: Lista de textos.
+    - Carrega textos a partir de arquivos JSON em uma pasta.  
 
-  - `test_tokenizer(self, texts, verbose=False)`  
-    - **Descrição**: Testa o tokenizador paralelamente em uma lista de textos.  
-    - **Funcionamento**:
-      - Utiliza processamento paralelo para tokenização e decodificação.
-      - Exibe relatório com tempo total e erros encontrados.
-
-- **Métodos Privados**  
   - `_get_vocab_size(self, text)`  
-    - **Descrição**: Calcula o tamanho do vocabulário adaptativo com base nos caracteres únicos.  
+    - Calcula o tamanho do vocabulário adaptativo com base nos caracteres únicos.  
 
   - `_process_text(self, i, original_text, tokenizer, get_vocab_size, verbose)`  
-    - **Descrição**: Tokeniza e decodifica um texto individualmente.  
-    - **Funcionamento**:
-      - Treina, codifica e decodifica o texto.
-      - Verifica erros e registra exceções, se necessário.
+    - Treina, codifica e decodifica o texto.
+    - Verifica erros e registra exceções, se necessário.
+
+  - `test_tokenizer(self, texts, verbose=False)`  
+    - Testa o tokenizador paralelamente em uma lista de textos.
+    - Exibe relatório com tempo total e erros encontrados.
+
 
 ## Demais arquivos
 - **run.ipynb**: notebook onde se aplica o algoritmo BPE no conjunto de dados fornecido pelo professor, mais descrições no próprio notebook.
