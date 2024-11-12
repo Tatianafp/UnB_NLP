@@ -1,4 +1,4 @@
-# Atividade: Aplicação do Algoritmo BPE
+# Atividade: Criação de Modelo de Bigrama para Geração de Texto
 
 ## Objetivo
 
