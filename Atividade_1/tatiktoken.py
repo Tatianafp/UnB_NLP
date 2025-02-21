@@ -1,4 +1,5 @@
 import regex as re
+from tqdm import tqdm
 
 GPT4_SPLIT_PATTERN = r"""'(?i:[sdmt]|ll|ve|re)|[^\r\n\p{L}\p{N}]?+\p{L}+|\p{N}{1,3}| ?[^\s\p{L}\p{N}]++[\r\n]*|\s*[\r\n]|\s+(?!\S)|\s+"""
 
@@ -59,19 +60,21 @@ class Tokenizer():
 
 		num_merges = vocab_size - 256
 		text_chunks = re.findall(self.pattern, text)
-		ids = [list(ch.encode("utf-8")) for ch in text_chunks]
-
+		print('ids')
+		ids = [list(ch.encode("utf-8")) for ch in tqdm(text_chunks)]
+		print('Total ids: ', len(ids))
 		self.merges = {}
 		self.vocab = {idx: bytes([idx]) for idx in range(256)}
 		
 		# Realiza as fusões necessárias para o vocabulário desejado.
-		for i in range(num_merges):
+		print('merges')
+		for i in tqdm(range(num_merges)):
 			self.frequency = {}
-			for chunk_ids in ids[:-1]:
+			for chunk_ids in tqdm(ids[:-1]):
 				self._get_pairs_frequency(chunk_ids, self.frequency)
 			pair = self._get_most_frequent_pair(chunk_ids, self.frequency)
 			idx = 256 + i
-			ids = [self._merge(chunk_ids, pair, idx) for chunk_ids in ids]
+			ids = [self._merge(chunk_ids, pair, idx) for chunk_ids in tqdm(ids)]
 
 			self.merges[pair] = idx
 			self.vocab[idx] = self.vocab[pair[0]] + self.vocab[pair[1]]
@@ -110,6 +113,3 @@ class Tokenizer():
 		tokens = b"".join(self.vocab[idx] for idx in ids)
 		text = tokens.decode("utf-8", errors="replace")
 		return text
-	
-
-
